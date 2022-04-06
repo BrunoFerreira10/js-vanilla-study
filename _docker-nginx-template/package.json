@@ -1,0 +1,13 @@
+{
+  "name": "template-basic-docker-nginx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev-up": "docker-compose up -d",
+    "dev-down": "docker-compose down"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

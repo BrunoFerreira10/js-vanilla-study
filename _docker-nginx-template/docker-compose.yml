@@ -1,0 +1,12 @@
+version: '3' 
+services: 
+  nginx-appname:
+    container_name: nginx-appname
+    image: nginx
+    volumes:
+    - ./templates:/etc/nginx/templates
+    - ./html:/usr/share/nginx/html
+    ports:
+    - "8080:80"
+    environment:
+    - NGINX_PORT=80
