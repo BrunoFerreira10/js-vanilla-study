@@ -84,13 +84,12 @@ const menu = [
 const filterContainer = document.querySelector('.btn-container')
 const sectionCenter = document.querySelector('.section-center')
 
-
 window.addEventListener('DOMContentLoaded', event => {
-  createFilterButtonsList(menu)  
-  createMenuItemsList(menu)    
+  createFilterButtonsList(menu)
+  createMenuItemsList(menu)
 })
 
-function addButtonsEventListeners() {  
+function addButtonsEventListeners() {
   const filterButtons = document.querySelectorAll('.filter-btn')
 
   filterButtons.forEach(button => {
@@ -132,8 +131,6 @@ function createMenuItemsList(menuItens) {
 
 function createFilterButtonsList(menuItens) {
 
-  // Pipe example  
-
   filterContainer.innerHTML = menuItens.reduce((uniqueFilterValues, filterValue) => {
     if (!uniqueFilterValues.includes(filterValue.category))
       uniqueFilterValues.push(filterValue.category)
@@ -147,19 +144,4 @@ function createFilterButtonsList(menuItens) {
   }).join('')
 
   addButtonsEventListeners()
-
-  /*
-  const uniqueFilterValues = menuItens.reduce((uniqueFilterValues , filterValue) => {
-    if(!uniqueFilterValues.includes(filterValue.category))
-      uniqueFilterValues.push(filterValue.category)
-    return uniqueFilterValues
-  }, ['all'])
-
-  filterContainer.innerHTML = uniqueFilterValues.map(filterValue => {
-    return `
-      <button class="filter-btn" type="button" data-category="${filterValue}">
-        ${filterValue}
-      </button>
-    `
-  }).join('')*/
 }
