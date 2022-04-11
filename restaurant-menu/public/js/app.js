@@ -71,50 +71,46 @@ const menu = [
     img: "../assets/images/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: "Bifão",
+    category: "Steaks",
+    price: 99.99,
+    img: "../assets/images/item-10.jpeg",
+    desc: `Bifão do bom! Cheio de gordura! Esse é 10! Serve umas 20 pessoas, isso se cada uma tiver uns quinze dias sem comer.`,
+  },
 ];
 
 const filterContainer = document.querySelector('.btn-container')
-createFilterButtonsList(getFilterValues(menu))
-
 const sectionCenter = document.querySelector('.section-center')
-const filterButtons = document.querySelectorAll('.filter-btn')
 
-// Class solution for dynamic items
-window.addEventListener('DOMContentLoaded', event => {  
-  createMenuItemsList(menu)  
+
+window.addEventListener('DOMContentLoaded', event => {
+  createFilterButtonsList(menu)  
+  createMenuItemsList(menu)    
 })
 
+function addButtonsEventListeners() {  
+  const filterButtons = document.querySelectorAll('.filter-btn')
 
-filterButtons.forEach(button => {
-  button.addEventListener('click', event => {    
-    
-    const category = event.currentTarget.dataset.category    
-    createMenuItemsList(menu, category)
+  filterButtons.forEach(button => {
+    button.addEventListener('click', event => {
 
-    const menuListByCategory = menu.filter(menuItem => {
-      if(menuItem.category === category)
-        return menuItem
-      if(category === 'all')
-        return menuItem
+      const category = event.currentTarget.dataset.category
+      createMenuItemsList(menu, category)
+
+      const menuListByCategory = menu.filter(menuItem => {
+        if (menuItem.category === category)
+          return menuItem
+        if (category === 'all')
+          return menuItem
+      })
+      createMenuItemsList(menuListByCategory)
     })
-
-    createMenuItemsList(menuListByCategory)
   })
-})
-
-function getFilterValues(menuItens) {
-  let filterValues = ['all']
-  
-  menuItens.map(menuItem => {
-    if(filterValues.includes(menuItem.category))
-      return
-    filterValues.push(menuItem.category)
-  })
-  
-  return filterValues
 }
 
-function createMenuItemsList(menuItens){
+function createMenuItemsList(menuItens) {
   let displayMenu = menuItens.map(menuItem => {
 
     return `
@@ -134,77 +130,36 @@ function createMenuItemsList(menuItens){
   sectionCenter.innerHTML = displayMenu
 }
 
-function createFilterButtonsList(filterButtonsValues) {
-  let filterButtons = filterButtonsValues.map(filterValue => {
+function createFilterButtonsList(menuItens) {
+
+  // Pipe example  
+
+  filterContainer.innerHTML = menuItens.reduce((uniqueFilterValues, filterValue) => {
+    if (!uniqueFilterValues.includes(filterValue.category))
+      uniqueFilterValues.push(filterValue.category)
+    return uniqueFilterValues
+  }, ['all']).map(filterValue => {
     return `
-      <button class="filter-btn" type="button" data-category="${filterValue}">${filterValue}</button>
+      <button class="filter-btn" type="button" data-category="${filterValue}">
+        ${filterValue}
+      </button>
     `
-  })
+  }).join('')
 
-  filterButtons = filterButtons.join('')
-  filterContainer.innerHTML = filterButtons
+  addButtonsEventListeners()
+
+  /*
+  const uniqueFilterValues = menuItens.reduce((uniqueFilterValues , filterValue) => {
+    if(!uniqueFilterValues.includes(filterValue.category))
+      uniqueFilterValues.push(filterValue.category)
+    return uniqueFilterValues
+  }, ['all'])
+
+  filterContainer.innerHTML = uniqueFilterValues.map(filterValue => {
+    return `
+      <button class="filter-btn" type="button" data-category="${filterValue}">
+        ${filterValue}
+      </button>
+    `
+  }).join('')*/
 }
-
-// My first solution for filter
-// const sectionCenter = document.querySelector('.section-center')
-// const filterButtons = document.querySelectorAll('.filter-btn')
-
-// // Class solution for dynamic items
-// window.addEventListener('DOMContentLoaded', event => {
-//   createMenuItemsList(menu)
-// })
-
-// filterButtons.forEach(button => {
-//   button.addEventListener('click', event => {
-//     const buttonText = event.currentTarget.innerHTML
-//     createMenuItemsList(menu, category)
-//   })
-// })
-
-// function createMenuItemsList(menuItens, categoryFilter){
-//   let displayMenu = menuItens.map(menuItem => {
-
-//     if(categoryFilter !== undefined && categoryFilter !== 'all' && categoryFilter !== menuItem.category)
-//       return
-
-//     return `
-//         <article class="menu-item">
-//           <img src=${menuItem.img} class="photo" alt=${menuItem.title}>
-//           <div class="item-info">
-//             <header>
-//               <h4>${menuItem.title}</h4>
-//               <h4 class="price">$${menuItem.price}</h4>
-//             </header>
-//             <p class="item-text">${menuItem.desc}</p>
-//           </div>
-//         </article>`
-//   })
-
-//   displayMenu = displayMenu.join('')
-//   sectionCenter.innerHTML = displayMenu
-// }
-
-
-// My first solution for add dynamic items
-// window.addEventListener('DOMContentLoaded', event => {
-//   menu.forEach(menuItem => {
-//     sectionCenter.innerHTML += createMenuItem(menuItem)
-//   })
-// })
-
-// function createMenuItem(menuItem) {
-
-//   let articleMenuItem = `
-//     <article class="menu-item">
-//       <img src=${menuItem.img} class="photo" alt=${menuItem.title}>
-//       <div class="item-info">
-//         <header>
-//           <h4>${menuItem.title}</h4>
-//           <h4 class="price">$${menuItem.price}</h4>
-//         </header>
-//         <p class="item-text">${menuItem.desc}</p>
-//       </div>
-//     </article>`
-
-//   return articleMenuItem
-// }
